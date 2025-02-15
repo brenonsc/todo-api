@@ -14,3 +14,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    command: >
+      sh -c "npx sequelize-cli db:migrate && npm run dev"
