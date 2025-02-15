@@ -3,27 +3,30 @@ const { Todos } = require('../models')
 class TodoController {
     async index(req, res) {
         try {
-            const todos = await Todos.findAll()
+            const todos = await Todos.findAll({
+                where: { user_id: req.userId },
+                order: [['id', 'ASC']]
+            })
             return res.status(200).json(todos)
         } catch (error) {
             return res.status(500).json({ error: error.message })
         }
     }
-    
+
     async store(req, res) {
         try {
             const { title, description, status } = req.body
-            const todo = await Todos.create({ title, description, status })
+            const todo = await Todos.create({ title, description, status, user_id: req.userId })
             return res.status(201).json(todo)
         } catch (error) {
             return res.status(500).json({ error: error.message })
         }
     }
-    
+
     async show(req, res) {
         try {
             const { id } = req.params
-            const todo = await Todos.findByPk(id)
+            const todo = await Todos.findOne({ where: { id, user_id: req.userId } })
             if (!todo) {
                 return res.status(404).json({ error: 'Todo not found' })
             }
@@ -32,12 +35,12 @@ class TodoController {
             return res.status(500).json({ error: error.message })
         }
     }
-    
+
     async update(req, res) {
         try {
             const { id } = req.params
             const { title, description, status } = req.body
-            const todo = await Todos.findByPk(id)
+            const todo = await Todos.findOne({ where: { id, user_id: req.userId } })
             if (!todo) {
                 return res.status(404).json({ error: 'Todo not found' })
             }
@@ -50,11 +53,11 @@ class TodoController {
             return res.status(500).json({ error: error.message })
         }
     }
-    
+
     async delete(req, res) {
         try {
             const { id } = req.params
-            const todo = await Todos.findByPk(id)
+            const todo = await Todos.findOne({ where: { id, user_id: req.userId } })
             if (!todo) {
                 return res.status(404).json({ error: 'Todo not found' })
             }
