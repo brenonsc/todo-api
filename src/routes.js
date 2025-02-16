@@ -8,6 +8,7 @@ const routes = Router();
 
 //Auth routes
 routes.post("/login", AuthController.login);
+routes.post("/logout", authMiddleware, AuthController.logout);
 
 // Users routes
 routes.post("/users", UserController.store);

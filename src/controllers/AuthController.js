@@ -1,6 +1,7 @@
 const { Users } = require('../models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const blacklist = require('../config/blacklist');
 
 class AuthController {
     async login(req, res) {
@@ -21,6 +22,16 @@ class AuthController {
 
             return res.status(200).json({ token });
 
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
+    
+    async logout(req, res) {
+        try {
+            const token = req.headers['authorization'].split(' ')[1];
+            blacklist.push(token);
+            return res.status(204).send();
         } catch (error) {
             return res.status(500).json({ error: error.message });
         }

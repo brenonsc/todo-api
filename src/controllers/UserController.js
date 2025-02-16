@@ -1,5 +1,6 @@
 const { Users } = require('../models');
 const bcrypt = require('bcryptjs');
+const blacklist = require('../config/blacklist');
 
 class UserController {
     async store(req, res) {
@@ -76,6 +77,10 @@ class UserController {
             if (!user) {
                 return res.status(404).json({ error: 'User not found' });
             }
+
+            const token = req.headers['authorization'].split(' ')[1];
+            blacklist.push(token);
+            
             await user.destroy();
             return res.status(204).send();
         } catch (error) {
