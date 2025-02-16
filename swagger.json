@@ -1,0 +1,352 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0",
+    "title": "Todos API",
+    "description": "API para administrar tarefas de usuários."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["Auth"],
+        "description": "Autenticar um usuário.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "john@email.com"
+                  },
+                  "password": {
+                    "example": "p@ssw0rd"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário autenticado com sucesso."
+          },
+          "400": {
+            "description": "Solicitação inválida."
+          },
+          "401": {
+            "description": "Usuário ou senha inválidos."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "description": "Criar um novo usuário.",
+        "security": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "John Doe"
+                  },
+                  "email": {
+                    "example": "john@email.com"
+                  },
+                  "password": {
+                    "example": "p@ssw0rd"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso."
+          },
+          "400": {
+            "description": "Solicitação inválida."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "put": {
+        "tags": ["User"],
+        "description": "Atualizar um usuário.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "Jane Doe"
+                  },
+                  "email": {
+                    "example": "jane@email.com"
+                  },
+                  "password": {
+                    "example": "p@ssw0rd"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado com sucesso."
+          },
+          "400": {
+            "description": "Solicitação inválida."
+          },
+          "401": {
+            "description": "Usuário não logado."
+          },
+          "403": {
+            "description": "Usuário não autorizado."
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "description": "Deletar um usuário.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuário deletado com sucesso."
+          },
+          "401": {
+            "description": "Usuário não logado."
+          },
+          "403": {
+            "description": "Usuário não autorizado."
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/todos": {
+      "get": {
+        "tags": ["Todos"],
+        "description": "Listar todas as tarefas do usuário.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Tarefas listadas com sucesso."
+          },
+          "401": {
+            "description": "Usuário não logado."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Todos"],
+        "description": "Criar uma nova tarefa.",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "example": "Swagger"
+                  },
+                  "description": {
+                    "example": "Configurar Swagger na aplicação."
+                  },
+                  "status": {
+                    "example": "Pendente"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tarefa criada com sucesso."
+          },
+          "401": {
+            "description": "Usuário não logado."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
+    "/todos/{id}": {
+      "get": {
+        "tags": ["Todos"],
+        "description": "Obter uma tarefa específica do usuário.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tarefa obtida com sucesso."
+          },
+          "401": {
+            "description": "Usuário não logado."
+          },
+          "404": {
+            "description": "Tarefa não existe ou não é do usuário."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "put": {
+        "tags": ["Todos"],
+        "description": "Atualizar uma tarefa.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "example": "Swagger"
+                  },
+                  "description": {
+                    "example": "Configurar Swagger na aplicação."
+                  },
+                  "status": {
+                    "example": "Concluído"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tarefa atualizada com sucesso."
+          },
+          "401": {
+            "description": "Usuário não logado."
+          },
+          "404": {
+            "description": "Tarefa não existe ou não é do usuário."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Todos"],
+        "description": "Deletar uma tarefa.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tarefa deletada com sucesso."
+          },
+          "401": {
+            "description": "Usuário não logado."
+          },
+          "404": {
+            "description": "Tarefa não existe ou não é do usuário."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    }
+  }
+}
