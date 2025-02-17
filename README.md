@@ -108,6 +108,14 @@ A API está documentada em Swagger, e pode ser acessada em `http://localhost:300
     - 400: Solicitação inválida.
     - 500: Erro interno do servidor.
 
+- **GET /users/me**
+
+  - Resumo: Obter informações do usuário logado.
+  - Respostas:
+    - 200: Usuário obtido com sucesso.
+    - 404: Usuário não encontrado.
+    - 500: Erro interno do servidor.
+
 - **PUT /users/{id}**
 
   - Resumo: Atualizar um usuário.
