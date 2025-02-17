@@ -12,6 +12,7 @@ routes.post("/logout", authMiddleware, AuthController.logout);
 
 // Users routes
 routes.post("/users", UserController.store);
+routes.get("/users/me", authMiddleware, UserController.me)
 routes.put("/users/:id", authMiddleware, UserController.update);
 routes.delete("/users/:id", authMiddleware, UserController.delete);
 

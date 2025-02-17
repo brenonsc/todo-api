@@ -118,6 +118,24 @@
         }
       }
     },
+    "/users/me": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Retorna informações do usuário.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Dados de usuário retornados com sucesso."
+          },
+          "401": {
+            "description": "Usuário não logado."
+          },
+          "500": {
+            "description": "Erro interno do servidor."
+          }
+        }
+      }
+    },
     "/users/{id}": {
       "put": {
         "tags": ["User"],
@@ -239,7 +257,7 @@
                     "example": "Configurar Swagger na aplicação."
                   },
                   "status": {
-                    "example": "Pendente"
+                    "example": "pending"
                   }
                 }
               }
@@ -314,7 +332,7 @@
                     "example": "Configurar Swagger na aplicação."
                   },
                   "status": {
-                    "example": "Concluído"
+                    "example": "completed"
                   }
                 }
               }
